@@ -1,0 +1,8 @@
+/bootstrap/compiled.php
+.env.*.php
+.env.php
+
+# Intellij
+.idea/
+*.iml
+*.iws
