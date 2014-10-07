@@ -24,7 +24,7 @@ $password = "Sample Password";
   <?php
   $password_length = 0;
   if (isset($_POST['qtyOfWords'])) {
-    $password_length = $_POST['qtyOfWords'];
+    $password_length = intval($_POST['qtyOfWords']);
   }
   $password_isIncludingNumber = false;
   if (isset($_POST['isIncludingNumber'])) {
@@ -36,8 +36,12 @@ $password = "Sample Password";
   }
 
   if (isset($_POST['qtyOfWords'])) {
-    $passwordGen = new XkcdPasswordGen();
-    $password = $passwordGen->xkcd_pw_gen($password_length, $password_isIncludingNumber, $password_isIncludingSymbol);
+    if (is_int($password_length) && $password_length <= 5 && $password_length > 0) {
+      $passwordGen = new XkcdPasswordGen();
+      $password = $passwordGen->xkcd_pw_gen($password_length, $password_isIncludingNumber, $password_isIncludingSymbol);
+    } else {
+      echo "<script>alert('# of words must be greater than 0 and less than 6.')</script>";
+    }
   }
   ?>
 </head>
@@ -62,10 +66,10 @@ $password = "Sample Password";
       <div class="row">
         <form class="form-horizontal" role="form" action="index.php" method="post">
           <div class="form-group">
-            <label for="inputEmail3" class="col-sm-4 control-label"># of Words (Max 9)</label>
+            <label class="col-sm-4 control-label"># of Words (Max 5)</label>
 
             <div class="col-sm-4">
-              <input type="text" class="form-control" name="qtyOfWords" value="<?php
+              <input type="text" class="form-control" maxlength="1" name="qtyOfWords" value="<?php
               if (isset($_POST['qtyOfWords'])) {
                 echo htmlentities($_POST['qtyOfWords']);
               }
@@ -86,14 +90,14 @@ $password = "Sample Password";
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-6">
+            <div class="col-sm-6" style="margin-left: 30px">
               <div class="checkbox">
                 <label>
                   <input type="checkbox" name="isIncludingSymbol" <?php
                   if (isset($_POST['isIncludingSymbol'])) {
                     echo "checked";
                   }
-                  ?>> Add a symbol
+                  ?>> Add a special character
                 </label>
               </div>
             </div>

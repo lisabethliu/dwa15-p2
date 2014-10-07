@@ -247,7 +247,7 @@ class XkcdPasswordGen
     "year", "yellow", "yes", "yesterday", "yet", "you", "young", "younger",
     "your", "yourself", "youth", "zero", "zoo", "battery", "staple");
 
-  public function xkcd_pw_gen($length = 8, $isIncludingNumber = false, $isIncludingSymbo = false)
+  public function xkcd_pw_gen($length = 8, $isIncludingNumber = false, $isIncludingSymbol = false)
   {
     $passwords = array();
 
@@ -260,7 +260,7 @@ class XkcdPasswordGen
       $password .= $this->get_random_number();
     }
 
-    if ($isIncludingSymbo) {
+    if ($isIncludingSymbol) {
       $password .= $this->get_random_symbol();
     }
 
